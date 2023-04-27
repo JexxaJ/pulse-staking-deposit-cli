@@ -16,10 +16,7 @@ from staking_deposit.utils.validation import (
     validate_password_strength,
     validate_eth1_withdrawal_address,
 )
-from staking_deposit.utils.constants import (
-    MAX_DEPOSIT_AMOUNT,
-    DEFAULT_VALIDATOR_KEYS_FOLDER_NAME,
-)
+from staking_deposit.utils.constants import DEFAULT_VALIDATOR_KEYS_FOLDER_NAME
 from staking_deposit.utils.ascii_art import RHINO_0
 from staking_deposit.utils.click import (
     captive_prompt_callback,
@@ -117,9 +114,9 @@ def generate_keys(ctx: click.Context, validator_start_index: int,
                   execution_address: HexAddress, **kwargs: Any) -> None:
     mnemonic = ctx.obj['mnemonic']
     mnemonic_password = ctx.obj['mnemonic_password']
-    amounts = [MAX_DEPOSIT_AMOUNT] * num_validators
-    folder = os.path.join(folder, DEFAULT_VALIDATOR_KEYS_FOLDER_NAME)
     chain_setting = get_chain_setting(chain)
+    amounts = [chain_setting.MAX_DEPOSIT_AMOUNT] * num_validators
+    folder = os.path.join(folder, DEFAULT_VALIDATOR_KEYS_FOLDER_NAME)
     if not os.path.exists(folder):
         os.mkdir(folder)
     click.clear()

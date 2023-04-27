@@ -1,7 +1,7 @@
 VENV_NAME?=venv
 VENV_ACTIVATE=. $(VENV_NAME)/bin/activate
 PYTHON=${VENV_NAME}/bin/python3.8
-DOCKER_IMAGE="ethereum/staking-deposit-cli:latest"
+DOCKER_IMAGE="registry.gitlab.com/pulsechaincom/staking-deposit-cli:latest"
 
 help:
 	@echo "clean - remove build and Python file artifacts"

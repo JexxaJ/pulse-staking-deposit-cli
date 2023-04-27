@@ -20,7 +20,6 @@ from staking_deposit.utils.constants import (
     BLS_WITHDRAWAL_PREFIX,
     ETH1_ADDRESS_WITHDRAWAL_PREFIX,
     ETH2GWEI,
-    MAX_DEPOSIT_AMOUNT,
     MIN_DEPOSIT_AMOUNT,
 )
 from staking_deposit.utils.crypto import SHA256
@@ -113,7 +112,7 @@ class Credential:
 
     @property
     def deposit_message(self) -> DepositMessage:
-        if not MIN_DEPOSIT_AMOUNT <= self.amount <= MAX_DEPOSIT_AMOUNT:
+        if not MIN_DEPOSIT_AMOUNT <= self.amount <= self.chain_setting.MAX_DEPOSIT_AMOUNT:
             raise ValidationError(f"{self.amount / ETH2GWEI} ETH deposits are not within the bounds of this cli.")
         return DepositMessage(
             pubkey=self.signing_pk,

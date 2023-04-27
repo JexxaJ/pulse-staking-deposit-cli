@@ -1,5 +1,9 @@
 from typing import Dict, NamedTuple
 from eth_utils import decode_hex
+from utils.constants import (
+    MAX_DEPOSIT_AMOUNT,
+    PULSECHAIN_MAX_DEPOSIT_AMOUNT,
+)
 
 DEPOSIT_CLI_VERSION = '2.5.0'
 
@@ -9,12 +13,20 @@ class BaseChainSetting(NamedTuple):
     GENESIS_FORK_VERSION: bytes
     GENESIS_VALIDATORS_ROOT: bytes
 
+    @property
+    def MAX_DEPOSIT_AMOUNT(self):
+        if self.NETWORK_NAME.lower().startswith('pulsechain'):
+            return PULSECHAIN_MAX_DEPOSIT_AMOUNT
+        return MAX_DEPOSIT_AMOUNT
 
 MAINNET = 'mainnet'
 GOERLI = 'goerli'
 PRATER = 'prater'
 SEPOLIA = 'sepolia'
 ZHEJIANG = 'zhejiang'
+PULSECHAIN_DEVNET = 'pulsechain-devnet'
+PULSECHAIN_TESTNET_V4 = 'pulsechain-testnet-v4'
+
 
 # Mainnet setting
 MainnetSetting = BaseChainSetting(
@@ -32,7 +44,16 @@ SepoliaSetting = BaseChainSetting(
 ZhejiangSetting = BaseChainSetting(
     NETWORK_NAME=ZHEJIANG, GENESIS_FORK_VERSION=bytes.fromhex('00000069'),
     GENESIS_VALIDATORS_ROOT=bytes.fromhex('53a92d8f2bb1d85f62d16a156e6ebcd1bcaba652d0900b2c2f387826f3481f6f'))
-
+# PulseChain Devnet
+PulseDevnetSetting = BaseChainSetting(
+    NETWORK_NAME=PULSECHAIN_DEVNET,
+    GENESIS_FORK_VERSION=bytes.fromhex('20000089'),
+    GENESIS_VALIDATORS_ROOT=bytes.fromhex('4aedc10744730347aa6c22010bd781a4f32e8369e06c788da4bfdadd11c816fe'))
+# PulseChain Testnet V4
+PulseTestnetV4Setting = BaseChainSetting(
+    NETWORK_NAME=PULSECHAIN_TESTNET_V4,
+    GENESIS_FORK_VERSION=bytes.fromhex('00000943'),
+    GENESIS_VALIDATORS_ROOT=bytes.fromhex('d81664ba97279a6fa0832041b4aee6009172b4750a99467ff670a9faf3a34e64'))
 
 ALL_CHAINS: Dict[str, BaseChainSetting] = {
     MAINNET: MainnetSetting,
@@ -40,6 +61,8 @@ ALL_CHAINS: Dict[str, BaseChainSetting] = {
     PRATER: GoerliSetting,  # Prater is the old name of the Prater/Goerli testnet
     SEPOLIA: SepoliaSetting,
     ZHEJIANG: ZhejiangSetting,
+    PULSECHAIN_DEVNET: PulseDevnetSetting,
+    PULSECHAIN_TESTNET_V4: PulseTestnetV4Setting,
 }
 
 
