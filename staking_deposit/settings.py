@@ -24,6 +24,7 @@ GOERLI = 'goerli'
 PRATER = 'prater'
 SEPOLIA = 'sepolia'
 ZHEJIANG = 'zhejiang'
+PULSECHAIN = 'pulsechain'
 PULSECHAIN_DEVNET = 'pulsechain-devnet'
 PULSECHAIN_TESTNET_V4 = 'pulsechain-testnet-v4'
 
@@ -44,13 +45,18 @@ SepoliaSetting = BaseChainSetting(
 ZhejiangSetting = BaseChainSetting(
     NETWORK_NAME=ZHEJIANG, GENESIS_FORK_VERSION=bytes.fromhex('00000069'),
     GENESIS_VALIDATORS_ROOT=bytes.fromhex('53a92d8f2bb1d85f62d16a156e6ebcd1bcaba652d0900b2c2f387826f3481f6f'))
+# PulseChain
+PulseChainSetting = BaseChainSetting(
+    NETWORK_NAME=PULSECHAIN,
+    GENESIS_FORK_VERSION=bytes.fromhex('00000369'),
+    GENESIS_VALIDATORS_ROOT=bytes.fromhex('3357ba0018a2582aeabe4ae847aa17d50a3a99aaeb66293c01f80a83aecd0c90'))
 # PulseChain Devnet
-PulseDevnetSetting = BaseChainSetting(
+PulseChainDevnetSetting = BaseChainSetting(
     NETWORK_NAME=PULSECHAIN_DEVNET,
     GENESIS_FORK_VERSION=bytes.fromhex('20000089'),
     GENESIS_VALIDATORS_ROOT=bytes.fromhex('4aedc10744730347aa6c22010bd781a4f32e8369e06c788da4bfdadd11c816fe'))
 # PulseChain Testnet V4
-PulseTestnetV4Setting = BaseChainSetting(
+PulseChainTestnetV4Setting = BaseChainSetting(
     NETWORK_NAME=PULSECHAIN_TESTNET_V4,
     GENESIS_FORK_VERSION=bytes.fromhex('00000943'),
     GENESIS_VALIDATORS_ROOT=bytes.fromhex('d81664ba97279a6fa0832041b4aee6009172b4750a99467ff670a9faf3a34e64'))
@@ -61,8 +67,9 @@ ALL_CHAINS: Dict[str, BaseChainSetting] = {
     PRATER: GoerliSetting,  # Prater is the old name of the Prater/Goerli testnet
     SEPOLIA: SepoliaSetting,
     ZHEJIANG: ZhejiangSetting,
-    PULSECHAIN_DEVNET: PulseDevnetSetting,
-    PULSECHAIN_TESTNET_V4: PulseTestnetV4Setting,
+    PULSECHAIN: PulseChainSetting,
+    PULSECHAIN_DEVNET: PulseChainDevnetSetting,
+    PULSECHAIN_TESTNET_V4: PulseChainTestnetV4Setting,
 }
 
 
