@@ -132,7 +132,7 @@ def validate_eth1_withdrawal_address(cts: click.Context, param: Any, address: st
         raise ValidationError(load_text(['err_invalid_ECDSA_hex_addr_checksum']))
 
     normalized_address = to_normalized_address(address)
-    click.echo('\n%s\n' % load_text(['msg_ECDSA_hex_addr_withdrawal']))
+    click.echo('\nyou are setting %s as your withdrawal address\n' % (address))
     return normalized_address
 
 #

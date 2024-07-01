@@ -115,6 +115,7 @@ FUNC_NAME = 'generate_bls_to_execution_change'
         lambda: load_text(['arg_execution_address', 'confirm'], func=FUNC_NAME),
         lambda: load_text(['arg_execution_address', 'mismatch'], func=FUNC_NAME),
     ),
+    required=True,
     help=lambda: load_text(['arg_execution_address', 'help'], func=FUNC_NAME),
     param_decls=['--execution_address', '--eth1_withdrawal_address'],
     prompt=lambda: load_text(['arg_execution_address', 'prompt'], func=FUNC_NAME),

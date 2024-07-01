@@ -97,7 +97,7 @@ def generate_keys_arguments_decorator(function: Callable[..., Any]) -> Callable[
                 lambda: load_text(['arg_execution_address', 'confirm'], func='generate_keys_arguments_decorator'),
                 lambda: load_text(['arg_execution_address', 'mismatch'], func='generate_keys_arguments_decorator'),
             ),
-            default=None,
+            required=True,
             help=lambda: load_text(['arg_execution_address', 'help'], func='generate_keys_arguments_decorator'),
             param_decls=['--execution_address', '--eth1_withdrawal_address'],
         ),
