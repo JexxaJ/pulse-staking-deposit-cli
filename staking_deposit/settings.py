@@ -1,6 +1,6 @@
 from typing import Dict, NamedTuple
 from eth_utils import decode_hex
-from utils.constants import (
+from staking_deposit.utils.constants import (
     MIN_DEPOSIT_AMOUNT,
     MAX_DEPOSIT_AMOUNT,
     PULSECHAIN_MIN_DEPOSIT_AMOUNT,
