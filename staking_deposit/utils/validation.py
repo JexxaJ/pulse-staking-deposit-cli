@@ -123,6 +123,11 @@ def validate_int_range(num: Any, low: int, high: int) -> int:
         raise ValidationError(load_text(['err_not_positive_integer']))
 
 
+def validate_node_deposit_amount(amount: int) -> int:
+    if 1_000_000 <= int(amount) <= 31_000_000:
+        return int(amount)
+    raise ValidationError(load_text(['err_not_valid_amount']))
+
 def validate_eth1_withdrawal_address(cts: click.Context, param: Any, address: str) -> HexAddress:
     if address is None:
         return None

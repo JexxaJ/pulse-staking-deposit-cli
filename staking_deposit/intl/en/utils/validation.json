@@ -20,6 +20,9 @@
         "err_is_already_eth1_form": "The given withdrawal credentials is already in ETH1_ADDRESS_WITHDRAWAL_PREFIX form. Have you already set the EL (eth1) withdrawal addresss?",
         "err_not_bls_form": "The given withdrawal credentials is not in BLS_WITHDRAWAL_PREFIX form."
     },
+    "validate_node_deposit_amount": {
+        "err_not_valid_amount": "That is not a valid node deposit amount. Please check the doc and retype"
+    },
     "validate_bls_withdrawal_credentials_matching": {
         "err_not_matching": "The given withdrawal credentials does not match the old BLS withdrawal credentials that mnemonic generated."
     },

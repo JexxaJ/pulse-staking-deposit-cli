@@ -54,7 +54,7 @@ def cli(ctx: click.Context, language: str, non_interactive: bool) -> None:
 
 cli.add_command(existing_mnemonic)
 cli.add_command(new_mnemonic)
-cli.add_command(generate_bls_to_execution_change)
+# cli.add_command(generate_bls_to_execution_change)
 
 
 if __name__ == '__main__':

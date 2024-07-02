@@ -15,8 +15,12 @@ from staking_deposit.utils.validation import (
     validate_int_range,
     validate_password_strength,
     validate_eth1_withdrawal_address,
+    validate_node_deposit_amount,
 )
-from staking_deposit.utils.constants import DEFAULT_VALIDATOR_KEYS_FOLDER_NAME
+from staking_deposit.utils.constants import (
+    ETH2GWEI,
+    DEFAULT_VALIDATOR_KEYS_FOLDER_NAME
+)
 from staking_deposit.utils.ascii_art import RHINO_0
 from staking_deposit.utils.click import (
     captive_prompt_callback,
@@ -55,6 +59,28 @@ def generate_keys_arguments_decorator(function: Callable[..., Any]) -> Callable[
             prompt=lambda: load_text(['num_validators', 'prompt'], func='generate_keys_arguments_decorator'),
         ),
         jit_option(
+            callback=captive_prompt_callback(
+                lambda amount: validate_node_deposit_amount(amount),
+                lambda: load_text(['arg_node_deposit_amount', 'prompt'], func='generate_keys_arguments_decorator')
+            ),
+            required=True,
+            help=lambda: load_text(['arg_node_deposit_amount', 'help'], func='generate_keys_arguments_decorator'),
+            param_decls='--node_deposit_amount',
+            prompt=lambda: load_text(['arg_node_deposit_amount', 'prompt'], func='generate_keys_arguments_decorator'),
+        ),
+        jit_option(
+            callback=captive_prompt_callback(
+                lambda address: validate_eth1_withdrawal_address(None, None, address),
+                lambda: load_text(['arg_execution_address', 'prompt'], func='generate_keys_arguments_decorator'),
+                lambda: load_text(['arg_execution_address', 'confirm'], func='generate_keys_arguments_decorator'),
+                lambda: load_text(['arg_execution_address', 'mismatch'], func='generate_keys_arguments_decorator'),
+            ),
+            required=True,
+            help=lambda: load_text(['arg_execution_address', 'help'], func='generate_keys_arguments_decorator'),
+            param_decls=['--execution_address', '--eth1_withdrawal_address'],
+            prompt=lambda: load_text(['arg_execution_address', 'prompt'], func='generate_keys_arguments_decorator'),
+        ),
+        jit_option(
             default=os.getcwd(),
             help=lambda: load_text(['folder', 'help'], func='generate_keys_arguments_decorator'),
             param_decls='--folder',
@@ -90,17 +116,6 @@ def generate_keys_arguments_decorator(function: Callable[..., Any]) -> Callable[
             param_decls='--keystore_password',
             prompt=lambda: load_text(['keystore_password', 'prompt'], func='generate_keys_arguments_decorator'),
         ),
-        jit_option(
-            callback=captive_prompt_callback(
-                lambda address: validate_eth1_withdrawal_address(None, None, address),
-                lambda: load_text(['arg_execution_address', 'prompt'], func='generate_keys_arguments_decorator'),
-                lambda: load_text(['arg_execution_address', 'confirm'], func='generate_keys_arguments_decorator'),
-                lambda: load_text(['arg_execution_address', 'mismatch'], func='generate_keys_arguments_decorator'),
-            ),
-            required=True,
-            help=lambda: load_text(['arg_execution_address', 'help'], func='generate_keys_arguments_decorator'),
-            param_decls=['--execution_address', '--eth1_withdrawal_address'],
-        ),
     ]
     for decorator in reversed(decorators):
         function = decorator(function)
@@ -111,10 +126,11 @@ def generate_keys_arguments_decorator(function: Callable[..., Any]) -> Callable[
 @click.pass_context
 def generate_keys(ctx: click.Context, validator_start_index: int,
                   num_validators: int, folder: str, chain: str, keystore_password: str,
-                  execution_address: HexAddress, **kwargs: Any) -> None:
+                  execution_address: HexAddress, node_deposit_amount: int, **kwargs: Any) -> None:
     mnemonic = ctx.obj['mnemonic']
     mnemonic_password = ctx.obj['mnemonic_password']
     chain_setting = get_chain_setting(chain)
+    print(node_deposit_amount)
     amounts = [chain_setting.MAX_DEPOSIT_AMOUNT] * num_validators
     folder = os.path.join(folder, DEFAULT_VALIDATOR_KEYS_FOLDER_NAME)
     if not os.path.exists(folder):
