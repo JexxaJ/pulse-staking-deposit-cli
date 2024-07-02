@@ -98,7 +98,7 @@ On Unix-based systems, keystores and the `deposit_data*.json` have `440`/`-r--r-
 
 ##### Step 1. Installation
 
-See [releases page](https://github.com/ethereum/staking-deposit-cli/releases) to download and decompress the corresponding binary files.
+See [releases page](https://github.com/stafiprotocol/pulse-staking-deposit-cli/releases) to download and decompress the corresponding binary files.
 
 ##### Step 2. Create keys and `deposit_data-*.json`
 
@@ -146,6 +146,7 @@ You can use `new-mnemonic --help` to see all arguments. Note that if there are m
 | Argument | Type | Description |
 | -------- | -------- | -------- |
 | `--num_validators`  | Non-negative integer | The number of signing keys you want to generate. Note that the child key(s) are generated via the same master key. |
+| `--node_deposit_amount`  | Non-negative integer | The amount that a validator must deposit |
 | `--mnemonic_language` | String. Options: `简体中文`, `繁體中文`, `český jazyk`, `English`, `Italiano`, `한국어`, `Português`, `Español`. Default to `English` | The language of the mnemonic word list |
 | `--folder` | String. Pointing to `./validator_keys` by default | The folder path for the keystore(s) and deposit(s) |
 | `--chain` | String. `mainnet` by default | The chain setting for the signing domain. |
@@ -159,6 +160,7 @@ You can use `existing-mnemonic --help` to see all arguments. Note that if there 
 | -------- | -------- | -------- |
 | `--validator_start_index` | Non-negative integer | The index of the first validator's keys you wish to generate. If this is your first time generating keys with this mnemonic, use 0. If you have generated keys using this mnemonic before, use the next index from which you want to start generating keys from (eg, if you've generated 4 keys before (keys #0, #1, #2, #3), then enter 4 here.|
 | `--num_validators`  | Non-negative integer | The number of new signing keys you want to generate. Note that the child key(s) are generated via the same master key. |
+| `--node_deposit_amount`  | Non-negative integer | The amount that a validator must deposit |
 | `--folder` | String. Pointing to `./validator_keys` by default | The folder path for the keystore(s) and deposit(s) |
 | `--chain` | String. `mainnet` by default | The chain setting for the signing domain. |
 | `--execution_address` (or `--eth1_withdrawal_address`) | String. Eth1 address in hexadecimal encoded form | If this field is set and valid, the given Eth1 address will be used to create the withdrawal credentials. Otherwise, it will generate withdrawal credentials with the mnemonic-derived withdrawal public key in [ERC-2334 format](https://eips.ethereum.org/EIPS/eip-2334#eth2-specific-parameters). |
@@ -361,180 +363,6 @@ See [here](#arguments)
 See [here](#successful-message)
 
 ----
-
-### For Windows users
-
-#### Option 1. Download binary executable file
-
-##### Step 1. Installation
-
-See [releases page](https://github.com/ethereum/staking-deposit-cli/releases) to download and decompress the corresponding binary files.
-
-##### Step 2. Create keys and `deposit_data-*.json`
-
-Run one of the following command to enter the interactive CLI:
-
-```sh
-deposit.exe new-mnemonic
-```
-
-or
-
-```sh
-deposit.exe existing-mnemonic
-```
-
-You can also run the tool with optional arguments:
-
-```sh
-deposit.exe new-mnemonic --num_validators=<NUM_VALIDATORS> --mnemonic_language=english --chain=<CHAIN_NAME> --folder=<YOUR_FOLDER_PATH>
-```
-
-```sh
-deposit.exe existing-mnemonic --num_validators=<NUM_VALIDATORS> --validator_start_index=<START_INDEX> --chain=<CHAIN_NAME> --folder=<YOUR_FOLDER_PATH>
-```
-
-###### Language Argument
-
-See [here](#language_argument) for `--language` arguments.
-
-###### Commands
-
-See [here](#commands)
-
-###### Arguments
-
-See [here](#new-mnemonic-arguments) for `new-mnemonic` arguments
-See [here](#existing-mnemonic-arguments) for `existing-mnemonic` arguments
-See [here](#generate-bls-to-execution-change-arguments) for `generate-bls-to-execution-change` arguments
-
-#### Option 2. Build `deposit-cli` with native Python
-
-##### Step 0. Python version checking
-
-Ensure you are using Python version >= Python3.8 (Assume that you've installed Python 3 as the main Python):
-
-```sh
-python -V
-```
-
-##### Step 1. Installation
-
-Install the dependencies:
-
-```sh
-pip3 install -r requirements.txt
-python setup.py install
-```
-
-Or use the helper script:
-
-```sh
-sh deposit.sh install
-```
-
-##### Step 2. Create keys and `deposit_data-*.json`
-
-Run one of the following command to enter the interactive CLI:
-
-```sh
-./deposit.sh new-mnemonic
-```
-
-or
-
-```sh
-./deposit.sh existing-mnemonic
-```
-
-You can also run the tool with optional arguments:
-
-```sh
-./deposit.sh new-mnemonic --num_validators=<NUM_VALIDATORS> --mnemonic_language=english --chain=<CHAIN_NAME> --folder=<YOUR_FOLDER_PATH>
-```
-
-```sh
-./deposit.sh existing-mnemonic --num_validators=<NUM_VALIDATORS> --validator_start_index=<START_INDEX> --chain=<CHAIN_NAME> --folder=<YOUR_FOLDER_PATH>
-```
-
-###### Language Argument
-
-See [here](#language_argument) for `--language` arguments.
-
-###### Commands
-
-See [here](#commands)
-
-###### Arguments
-
-See [here](#new-mnemonic-arguments) for `new-mnemonic` arguments
-See [here](#existing-mnemonic-arguments) for `existing-mnemonic` arguments
-See [here](#generate-bls-to-execution-change-arguments) for `generate-bls-to-execution-change` arguments
-
-#### Option 3. Build `deposit-cli` with `virtualenv`
-
-##### Step 0. Python version checking
-
-Ensure you are using Python version >= Python3.8 (Assume that you've installed Python 3 as the main Python):
-
-```cmd
-python -V
-```
-
-##### Step 1. Installation
-
-For the [virtualenv](https://virtualenv.pypa.io/en/latest/) users, you can create a new venv:
-
-```cmd
-pip3 install virtualenv
-virtualenv venv
-.\venv\Scripts\activate
-```
-
-and install the dependencies:
-
-```cmd
-python setup.py install
-pip3 install -r requirements.txt
-```
-
-##### Step 2. Create keys and `deposit_data-*.json`
-
-Run one of the following command to enter the interactive CLI:
-
-```cmd
-python .\staking_deposit\deposit.py new-mnemonic
-```
-
-or
-
-```cmd
-python .\staking_deposit\deposit.py existing-mnemonic
-```
-
-You can also run the tool with optional arguments:
-
-```cmd
-python .\staking_deposit\deposit.py new-mnemonic --num_validators=<NUM_VALIDATORS> --mnemonic_language=english --chain=<CHAIN_NAME> --folder=<YOUR_FOLDER_PATH>
-```
-
-```cmd
-python .\staking_deposit\deposit.pyexisting-mnemonic --num_validators=<NUM_VALIDATORS> --validator_start_index=<START_INDEX> --chain=<CHAIN_NAME> --folder=<YOUR_FOLDER_PATH>
-```
-
-###### Language Argument
-
-See [here](#language_argument) for `--language` arguments.
-
-###### Commands
-
-See [here](#commands)
-
-###### Arguments
-
-See [here](#new-mnemonic-arguments) for `new-mnemonic` arguments
-See [here](#existing-mnemonic-arguments) for `existing-mnemonic` arguments
-See [here](#generate-bls-to-execution-change-arguments) for `generate-bls-to-execution-change` arguments
 
 ## Development
 
