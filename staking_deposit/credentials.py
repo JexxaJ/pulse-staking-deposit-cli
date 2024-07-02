@@ -112,8 +112,8 @@ class Credential:
 
     @property
     def deposit_message(self) -> DepositMessage:
-        if not MIN_DEPOSIT_AMOUNT <= self.amount <= self.chain_setting.MAX_DEPOSIT_AMOUNT:
-            raise ValidationError(f"{self.amount / ETH2GWEI} ETH deposits are not within the bounds of this cli.")
+        if not self.chain_setting.MIN_DEPOSIT_AMOUNT <= self.amount <= self.chain_setting.MAX_DEPOSIT_AMOUNT:
+            raise ValidationError(f"{self.amount / ETH2GWEI} PLS deposits are not within the bounds of this cli.")
         return DepositMessage(
             pubkey=self.signing_pk,
             withdrawal_credentials=self.withdrawal_credentials,
@@ -242,6 +242,17 @@ class CredentialList:
                                show_percent=False, show_pos=True) as credentials:
             deposit_data = [cred.deposit_datum_dict for cred in credentials]
         filefolder = os.path.join(folder, 'deposit_data-%i.json' % time.time())
+        with open(filefolder, 'w') as f:
+            json.dump(deposit_data, f, default=lambda x: x.hex())
+        if os.name == 'posix':
+            os.chmod(filefolder, int('440', 8))  # Read for owner & group
+        return filefolder
+
+    def export_stake_data_json(self, folder: str) -> str:
+        with click.progressbar(self.credentials, label=load_text(['msg_stake_data_creation']),
+                               show_percent=False, show_pos=True) as credentials:
+            deposit_data = [cred.deposit_datum_dict for cred in credentials]
+        filefolder = os.path.join(folder, 'stake_data-%i.json' % time.time())
         with open(filefolder, 'w') as f:
             json.dump(deposit_data, f, default=lambda x: x.hex())
         if os.name == 'posix':

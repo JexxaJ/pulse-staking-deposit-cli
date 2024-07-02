@@ -33,6 +33,7 @@
         "msg_creation_success": "\nSuccess!\nYour keys can be found at: ",
         "msg_pause": "\n\nPress any key.",
         "err_verify_keystores": "Failed to verify the keystores.",
+        "err_verify_stake": "Failed to verify the stake data JSON files.",
         "err_verify_deposit": "Failed to verify the deposit data JSON files."
     }
 }

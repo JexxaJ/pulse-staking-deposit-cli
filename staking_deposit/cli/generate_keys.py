@@ -12,6 +12,7 @@ from staking_deposit.credentials import (
 from staking_deposit.exceptions import ValidationError
 from staking_deposit.utils.validation import (
     verify_deposit_data_json,
+    verify_stake_data_json,
     validate_int_range,
     validate_password_strength,
     validate_eth1_withdrawal_address,
@@ -130,28 +131,40 @@ def generate_keys(ctx: click.Context, validator_start_index: int,
     mnemonic = ctx.obj['mnemonic']
     mnemonic_password = ctx.obj['mnemonic_password']
     chain_setting = get_chain_setting(chain)
-    print(node_deposit_amount)
-    amounts = [chain_setting.MAX_DEPOSIT_AMOUNT] * num_validators
+    deposit_amounts = [node_deposit_amount * ETH2GWEI] * num_validators
+    stake_amounts = [chain_setting.MAX_DEPOSIT_AMOUNT - node_deposit_amount * ETH2GWEI] * num_validators
     folder = os.path.join(folder, DEFAULT_VALIDATOR_KEYS_FOLDER_NAME)
     if not os.path.exists(folder):
         os.mkdir(folder)
     click.clear()
     click.echo(RHINO_0)
     click.echo(load_text(['msg_key_creation']))
-    credentials = CredentialList.from_mnemonic(
+    deposit_credentials = CredentialList.from_mnemonic(
         mnemonic=mnemonic,
         mnemonic_password=mnemonic_password,
         num_keys=num_validators,
-        amounts=amounts,
+        amounts=deposit_amounts,
         chain_setting=chain_setting,
         start_index=validator_start_index,
         hex_eth1_withdrawal_address=execution_address,
     )
-    keystore_filefolders = credentials.export_keystores(password=keystore_password, folder=folder)
-    deposits_file = credentials.export_deposit_data_json(folder=folder)
-    if not credentials.verify_keystores(keystore_filefolders=keystore_filefolders, password=keystore_password):
+    stake_credentials = CredentialList.from_mnemonic(
+        mnemonic=mnemonic,
+        mnemonic_password=mnemonic_password,
+        num_keys=num_validators,
+        amounts=stake_amounts,
+        chain_setting=chain_setting,
+        start_index=validator_start_index,
+        hex_eth1_withdrawal_address=execution_address,
+    )
+    keystore_filefolders = deposit_credentials.export_keystores(password=keystore_password, folder=folder)
+    deposits_file = deposit_credentials.export_deposit_data_json(folder=folder)
+    stakes_file = stake_credentials.export_stake_data_json(folder=folder)
+    if not deposit_credentials.verify_keystores(keystore_filefolders=keystore_filefolders, password=keystore_password):
         raise ValidationError(load_text(['err_verify_keystores']))
-    if not verify_deposit_data_json(deposits_file, credentials.credentials):
+    if not verify_deposit_data_json(deposits_file, deposit_credentials.credentials):
         raise ValidationError(load_text(['err_verify_deposit']))
+    if not verify_stake_data_json(stakes_file, stake_credentials.credentials):
+        raise ValidationError(load_text(['err_verify_stake']))
     click.echo(load_text(['msg_creation_success']) + folder)
     click.pause(load_text(['msg_pause']))

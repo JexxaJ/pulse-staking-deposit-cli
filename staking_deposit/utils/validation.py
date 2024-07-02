@@ -103,6 +103,16 @@ def validate_deposit(deposit_data_dict: Dict[str, Any], credential: Credential) 
     )
     return signed_deposit.hash_tree_root == deposit_message_root
 
+def verify_stake_data_json(filefolder: str, credentials: Sequence[Credential]) -> bool:
+    """
+    Validate every stake found in the stake-data JSON file folder.
+    """
+    with open(filefolder, 'r') as f:
+        stake_json = json.load(f)
+        with click.progressbar(stake_json, label=load_text(['msg_stake_verification']),
+                               show_percent=False, show_pos=True) as stakes:
+            return all([validate_deposit(stake, credential) for stake, credential in zip(stakes, credentials)])
+    return False
 
 def validate_password_strength(password: str) -> str:
     if len(password) < 8:
