@@ -103,6 +103,7 @@ def validate_deposit(deposit_data_dict: Dict[str, Any], credential: Credential) 
     )
     return signed_deposit.hash_tree_root == deposit_message_root
 
+
 def verify_stake_data_json(filefolder: str, credentials: Sequence[Credential]) -> bool:
     """
     Validate every stake found in the stake-data JSON file folder.
@@ -113,6 +114,7 @@ def verify_stake_data_json(filefolder: str, credentials: Sequence[Credential]) -
                                show_percent=False, show_pos=True) as stakes:
             return all([validate_deposit(stake, credential) for stake, credential in zip(stakes, credentials)])
     return False
+
 
 def validate_password_strength(password: str) -> str:
     if len(password) < 8:
@@ -133,10 +135,12 @@ def validate_int_range(num: Any, low: int, high: int) -> int:
         raise ValidationError(load_text(['err_not_positive_integer']))
 
 
-def validate_node_deposit_amount(amount: int) -> int:
-    if 1_000_000 <= int(amount) <= 31_000_000:
-        return int(amount)
+def validate_node_deposit_amount(amount: Any) -> int:
+    amount = int(amount)
+    if 1_000_000 <= amount <= 31_000_000:
+        return amount
     raise ValidationError(load_text(['err_not_valid_amount']))
+
 
 def validate_eth1_withdrawal_address(cts: click.Context, param: Any, address: str) -> HexAddress:
     if address is None:

@@ -16,16 +16,17 @@ class BaseChainSetting(NamedTuple):
     GENESIS_VALIDATORS_ROOT: bytes
 
     @property
-    def MAX_DEPOSIT_AMOUNT(self):
+    def MAX_DEPOSIT_AMOUNT(self) -> int:
         if self.NETWORK_NAME.lower().startswith('pulsechain'):
             return PULSECHAIN_MAX_DEPOSIT_AMOUNT
         return MAX_DEPOSIT_AMOUNT
 
     @property
-    def MIN_DEPOSIT_AMOUNT(self):
+    def MIN_DEPOSIT_AMOUNT(self) -> int:
         if self.NETWORK_NAME.lower().startswith('pulsechain'):
             return PULSECHAIN_MIN_DEPOSIT_AMOUNT
         return MIN_DEPOSIT_AMOUNT
+
 
 MAINNET = 'mainnet'
 GOERLI = 'goerli'

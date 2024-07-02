@@ -20,7 +20,6 @@ from staking_deposit.utils.constants import (
     BLS_WITHDRAWAL_PREFIX,
     ETH1_ADDRESS_WITHDRAWAL_PREFIX,
     ETH2GWEI,
-    MIN_DEPOSIT_AMOUNT,
 )
 from staking_deposit.utils.crypto import SHA256
 from staking_deposit.utils.intl import load_text
