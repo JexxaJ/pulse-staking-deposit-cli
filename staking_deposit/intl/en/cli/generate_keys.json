@@ -24,8 +24,8 @@
             "mismatch": "Error: the two entered values do not match. Please type again."
         },
         "arg_node_deposit_amount": {
-            "help": "The amount that a validator must deposit",
-            "prompt": "Please enter the amount that a validator must deposit"
+            "help": "The amount that a validator must deposit (0 for trust node, solo nodes need such as 4000000, 8000000 or 12000000 etc, you can find it in the doc)",
+            "prompt": "Please enter the amount that a validator must deposit (type 0 for trust node, solo nodes need such as 4000000, 8000000 or 12000000 etc, you can find it in the doc)"
         }
     },
     "generate_keys": {

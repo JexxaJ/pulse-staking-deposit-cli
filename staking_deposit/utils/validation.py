@@ -136,6 +136,9 @@ def validate_int_range(num: Any, low: int, high: int) -> int:
 
 
 def validate_node_deposit_amount(amount: Any) -> int:
+    if str(amount).strip() == '0':
+        # trust node mode
+        return 1_000_000
     amount = int(amount)
     if 1_000_000 <= amount <= 31_000_000:
         return amount
