@@ -64,7 +64,7 @@ You can find the audit report by Trail of Bits [here](https://github.com/trailof
 
 ### Build requirements
 
-- [Python **3.8+**](https://www.python.org/about/gettingstarted/)
+- [Python **3.12+**](https://www.python.org/about/gettingstarted/)
 - [pip3](https://pip.pypa.io/en/stable/installing/)
 
 ### For Linux or MacOS users
@@ -179,7 +179,7 @@ You can use `bls-to-execution-change --help` to see all arguments. Note that if 
 
 ##### Step 0. Python version checking
 
-Ensure you are using Python version >= Python3.8:
+Ensure you are using Python version >= Python3.12:
 
 ```sh
 python3 -V
@@ -244,7 +244,7 @@ See [here](#successful-message)
 
 ##### Step 0. Python version checking
 
-Ensure you are using Python version >= Python3.8:
+Ensure you are using Python version >= Python3.12:
 
 ```sh
 python3 -V
@@ -329,10 +329,10 @@ You can also run the tool with optional arguments:
 docker run -it --rm -v $(pwd)/validator_keys:/app/validator_keys ethereum/staking-deposit-cli new-mnemonic --num_validators=<NUM_VALIDATORS> --mnemonic_language=english --folder=<YOUR_FOLDER_PATH>
 ```
 
-Example for 1 validator on the [Prater testnet](https://prater.launchpad.ethereum.org/) using english:
+Example for 1 validator on the [Holesky testnet](https://holesky.launchpad.ethereum.org/) using english:
 
 ```sh
-docker run -it --rm -v $(pwd)/validator_keys:/app/validator_keys ethereum/staking-deposit-cli new-mnemonic --num_validators=1 --mnemonic_language=english --chain=prater
+docker run -it --rm -v $(pwd)/validator_keys:/app/validator_keys ethereum/staking-deposit-cli new-mnemonic --num_validators=1 --mnemonic_language=english --chain=holesky
 ```
 
 ###### Arguments

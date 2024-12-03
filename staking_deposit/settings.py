@@ -7,7 +7,7 @@ from staking_deposit.utils.constants import (
     PULSECHAIN_MAX_DEPOSIT_AMOUNT,
 )
 
-DEPOSIT_CLI_VERSION = '2.5.0'
+DEPOSIT_CLI_VERSION = '2.8.0'
 
 
 class BaseChainSetting(NamedTuple):
@@ -29,10 +29,9 @@ class BaseChainSetting(NamedTuple):
 
 
 MAINNET = 'mainnet'
-GOERLI = 'goerli'
-PRATER = 'prater'
 SEPOLIA = 'sepolia'
-ZHEJIANG = 'zhejiang'
+HOLESKY = 'holesky'
+MEKONG = 'mekong'
 PULSECHAIN = 'pulsechain'
 PULSECHAIN_DEVNET = 'pulsechain-devnet'
 PULSECHAIN_TESTNET_V4 = 'pulsechain-testnet-v4'
@@ -42,18 +41,18 @@ PULSECHAIN_TESTNET_V4 = 'pulsechain-testnet-v4'
 MainnetSetting = BaseChainSetting(
     NETWORK_NAME=MAINNET, GENESIS_FORK_VERSION=bytes.fromhex('00000000'),
     GENESIS_VALIDATORS_ROOT=bytes.fromhex('4b363db94e286120d76eb905340fdd4e54bfe9f06bf33ff6cf5ad27f511bfe95'))
-# Goerli setting
-GoerliSetting = BaseChainSetting(
-    NETWORK_NAME=GOERLI, GENESIS_FORK_VERSION=bytes.fromhex('00001020'),
-    GENESIS_VALIDATORS_ROOT=bytes.fromhex('043db0d9a83813551ee2f33450d23797757d430911a9320530ad8a0eabc43efb'))
 # Sepolia setting
 SepoliaSetting = BaseChainSetting(
     NETWORK_NAME=SEPOLIA, GENESIS_FORK_VERSION=bytes.fromhex('90000069'),
     GENESIS_VALIDATORS_ROOT=bytes.fromhex('d8ea171f3c94aea21ebc42a1ed61052acf3f9209c00e4efbaaddac09ed9b8078'))
-# Zhejiang setting
-ZhejiangSetting = BaseChainSetting(
-    NETWORK_NAME=ZHEJIANG, GENESIS_FORK_VERSION=bytes.fromhex('00000069'),
-    GENESIS_VALIDATORS_ROOT=bytes.fromhex('53a92d8f2bb1d85f62d16a156e6ebcd1bcaba652d0900b2c2f387826f3481f6f'))
+# Holesky setting
+HoleskySetting = BaseChainSetting(
+    NETWORK_NAME=HOLESKY, GENESIS_FORK_VERSION=bytes.fromhex('01017000'),
+    GENESIS_VALIDATORS_ROOT=bytes.fromhex('9143aa7c615a7f7115e2b6aac319c03529df8242ae705fba9df39b79c59fa8b1'))
+# Mekong setting
+MekongSetting = BaseChainSetting(
+    NETWORK_NAME=MEKONG, GENESIS_FORK_VERSION=bytes.fromhex('10637624'),
+    GENESIS_VALIDATORS_ROOT=bytes.fromhex('9838240bca889c52818d7502179b393a828f61f15119d9027827c36caeb67db7'))
 # PulseChain
 PulseChainSetting = BaseChainSetting(
     NETWORK_NAME=PULSECHAIN,
@@ -72,10 +71,9 @@ PulseChainTestnetV4Setting = BaseChainSetting(
 
 ALL_CHAINS: Dict[str, BaseChainSetting] = {
     MAINNET: MainnetSetting,
-    GOERLI: GoerliSetting,
-    PRATER: GoerliSetting,  # Prater is the old name of the Prater/Goerli testnet
     SEPOLIA: SepoliaSetting,
-    ZHEJIANG: ZhejiangSetting,
+    HOLESKY: HoleskySetting,
+    MEKONG: MekongSetting,
     PULSECHAIN: PulseChainSetting,
     PULSECHAIN_DEVNET: PulseChainDevnetSetting,
     PULSECHAIN_TESTNET_V4: PulseChainTestnetV4Setting,
